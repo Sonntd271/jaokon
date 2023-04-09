@@ -2,16 +2,19 @@ import cv2
 import numpy as np
 from keras.models import model_from_json
 
+MODEL_PATH_JSON = 'models/emotion_model.json'
+MODEL_PATH_WEIGHTS = "models/emotion_model.h5"
+
 emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
 # load json and create model
-json_file = open('models/emotion_model.json', 'r')
+json_file = open(MODEL_PATH_JSON, 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 emotion_model = model_from_json(loaded_model_json)
 
 # load weights into new model
-emotion_model.load_weights("models/emotion_model.h5")
+emotion_model.load_weights(MODEL_PATH_WEIGHTS)
 print("Loaded model from disk")
 
 # start the webcam feed

@@ -1,0 +1,5 @@
+# soni
+
+# pillow
+# opencv-python
+# tensorflow

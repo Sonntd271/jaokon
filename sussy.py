@@ -10,7 +10,7 @@ import time
 import threading
 
 gestures = {0:"do",1:"re",2:"mi",3:"fa",4:"sol",5:"la",6:"ti"}
-model = load_model("data/doremi.h5",compile= False)
+model = load_model("models/doremi.h5",compile= False)
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
               loss=tf.keras.losses.BinaryCrossentropy(),
               metrics=[tf.keras.metrics.BinaryAccuracy(),

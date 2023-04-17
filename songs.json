@@ -1,11 +1,11 @@
 {
     "songs": 
     {
-        "twinkle": ["do", "do", "sol", "sol", "la","la","sol"]
+        "twinkle": ["do", "do", "sol", "sol", "la", "la", "sol"]
     }, 
     
     "notes": {
-        "twinkle": ["C4","C4","G4","G4","A4","A4","G4"]
+        "twinkle": ["C4", "C4", "G4", "G4", "A4", "A4", "G4"]
     },
     "playbacks": {
         

@@ -122,20 +122,21 @@ class Sussy:
         if self.prev_pred == self.pred and self.pred != "" and self.pred == self.song[self.index]:
             self.count += 1
             if self.count >= 7:
-                self.color = (0,255,0)
+                self.color = (0, 255, 0)
                 self.count = 0
                 self.insert = True
         else:
             self.count = 0
             self.prev_pred = None
-            self.color = (0,0,255)
-
+            self.color = (0, 0, 255)
+        
+        print("Prev:", self.prev_pred)
+        print("Pred:", self.pred)
+        
         if self.pred != "":
             self.prev_pred = self.pred
         
         print("Want:", self.song[self.index])
-        print("Pred:", self.pred)
-        print("Prev:", self.prev_pred)
         print("Count:", self.count)
         print("Insert:", self.insert)
         print("Index:", self.index)
@@ -160,7 +161,7 @@ if __name__== "__main__":
     cap = cv2.VideoCapture(0)
     sus = Sussy()
 
-    while cap.isOpened():
+    while True:
         # insert = False
         ret, frame = cap.read()
 
@@ -176,5 +177,5 @@ if __name__== "__main__":
             break
 
     cap.release()
-    cv2.destroyAllWindows
+    cv2.destroyAllWindows()
     

@@ -1,9 +1,12 @@
 import cv2
+import json
 import numpy as np
 from keras.models import model_from_json
 
 MODEL_PATH_JSON = 'models/emotion_model.json'
 MODEL_PATH_WEIGHTS = "models/emotion_model.h5"
+CURRENT_STATUS_PATH = "statics/currentStatus.json"
+TARGET_COUNT = 20
 
 
 class emotionDetector:
@@ -11,6 +14,8 @@ class emotionDetector:
     def __init__(self):
 
         self.emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+        self.count = 0
+        self.prev_pred = None
 
         # load json and create model
         json_file = open(MODEL_PATH_JSON, 'r')
@@ -24,6 +29,23 @@ class emotionDetector:
 
         self.face_detector = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_detection.xml')
 
+    def update_json(self, emotion):
+
+        msg = {
+            "status": 1,
+            "face": emotion,
+            "note": ""
+        }
+        msg_json = json.dumps(msg, indent=4)
+        
+        print(f"Sending {emotion}")
+        with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+            current_status.write(msg_json)
+        print(f"Sent successfully")
+
+        self.count = 0
+        print(f"Resetting count, count: {self.count}")
+    
     def detect(self, frame):
 
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -38,9 +60,18 @@ class emotionDetector:
             cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray_frame, (48, 48)), -1), 0)
 
             # predict the emotions
-            emotion_prediction = self.emotion_model.predict(cropped_img)
-            maxindex = int(np.argmax(emotion_prediction))
-            cv2.putText(frame, self.emotion_dict[maxindex], (x + 5, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+            self.emotion_prediction = self.emotion_model.predict(cropped_img)
+            maxindex = int(np.argmax(self.emotion_prediction))
+            emotion = self.emotion_dict[maxindex]
+
+            if emotion == self.prev_pred and self.prev_pred != None:
+                self.count += 1
+                if self.count >= TARGET_COUNT:
+                    print(f"Count reached {self.count}, generating json")
+                    self.update_json(emotion=emotion)
+            
+            self.prev_pred = emotion
+            cv2.putText(frame, emotion, (x + 5, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
         return frame
 

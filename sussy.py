@@ -10,6 +10,8 @@ import time
 import threading
 
 SONG_FILE = "songs.json"
+CURRENT_STATUS_PATH = "statics/currentStatus.json"
+TARGET_COUNT = 7
 
 
 class Sussy:
@@ -83,6 +85,23 @@ class Sussy:
                 pygame.time.Clock().tick(10)
         pygame.quit()
 
+    def update_json(self, note):
+        
+        msg = {
+            "status": 2,
+            "face": "",
+            "note": note
+        }
+        msg_json = json.dumps(msg, indent=4)
+        
+        print(f"Sending {note}")
+        with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+            current_status.write(msg_json)
+        print(f"Sent successfully")
+
+        self.count = 0
+        print(f"Resetting count, count: {self.count}")
+
     def interact(self, cap, frame):
 
         self.insert = False
@@ -121,9 +140,9 @@ class Sussy:
         
         if self.prev_pred == self.pred and self.pred != "" and self.pred == self.song[self.index]:
             self.count += 1
-            if self.count >= 7:
+            if self.count >= TARGET_COUNT:
                 self.color = (0, 255, 0)
-                self.count = 0
+                self.update_json(note=self.notes[self.index])
                 self.insert = True
         else:
             self.count = 0

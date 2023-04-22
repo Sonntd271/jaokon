@@ -74,6 +74,7 @@ class Sussy:
         note = note[0]
         thread = threading.Thread(target=self.play_sound, args=(note, octave))
         thread.start()
+        thread.join()
 
     def playback(self, song):
 
@@ -84,6 +85,8 @@ class Sussy:
             while pygame.mixer.music.get_busy():
                 pygame.time.Clock().tick(10)
         pygame.quit()
+
+        self.index = 0
 
     def update_json(self, note):
         
@@ -155,7 +158,7 @@ class Sussy:
         if self.pred != "":
             self.prev_pred = self.pred
         
-        print("Want:", self.song[self.index])
+        # print("Want:", self.song[self.index])
         print("Count:", self.count)
         print("Insert:", self.insert)
         print("Index:", self.index)

@@ -54,8 +54,9 @@ class Sussy:
         self.song, self.notes = [[], []]
         with open(SONG_FILE) as json_file:
             data = json.load(json_file)
-            self.song = random.choice(list(data["songs"].items()))[1]
-            self.notes = random.choice(list(data["notes"].items()))[1]
+            chosen = random.choice(list(data["songs"]))
+            self.song = data["songs"][chosen]
+            self.notes = data["notes"][chosen]
 
     def play_sound(self, note, octave):
 

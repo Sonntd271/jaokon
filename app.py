@@ -92,6 +92,22 @@ def happy():
 def sad():
     return render_template("interaction/sad.html", pageDirect=get_page_direction())
 
+@app.route("/interaction/angry", methods=["GET"])    
+def angey():
+    return render_template("interaction/angry.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/disgusted", methods=["GET"])    
+def disgusted():
+    return render_template("interaction/disgusted.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/fearful", methods=["GET"])    
+def fearful():
+    return render_template("interaction/fearful.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/neutral", methods=["GET"])    
+def neutral():
+    return render_template("interaction/neutral.html", pageDirect=get_page_direction())
+
 @app.route("/music", methods=["GET"])
 def music():
     return render_template("music.html", pageDirect=get_page_direction())

@@ -84,6 +84,26 @@ def close():
 def interaction():
     return render_template("interaction.html", pageDirect=get_page_direction())
 
+@app.route("/interaction/angry", methods=["GET"])    
+def angry():
+    return render_template("interaction/angry.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/disgusted", methods=["GET"])    
+def disgusted():
+    return render_template("interaction/disgusted.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/fearful", methods=["GET"])    
+def fearful():
+    return render_template("interaction/fearful.html", pageDirect=get_page_direction())
+    
+@app.route("/interaction/neutral", methods=["GET"])    
+def neutral():
+    return render_template("interaction/neutral.html", pageDirect=get_page_direction())
+
+@app.route("/interaction/surprised", methods=["GET"])    
+def surprised():
+    return render_template("interaction/surprised.html", pageDirect=get_page_direction())
+
 @app.route("/interaction/happy", methods=["GET"])    
 def happy():
     return render_template("interaction/happy.html", pageDirect=get_page_direction())

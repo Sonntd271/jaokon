@@ -13,7 +13,7 @@ class emotionDetector:
 
     def __init__(self):
 
-        self.emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+        self.emotion_dict = {0: "angry", 1: "disgusted", 2: "fearful", 3: "happy", 4: "neutral", 5: "sad", 6: "surprised"}
         self.count = 0
         self.prev_pred = None
 

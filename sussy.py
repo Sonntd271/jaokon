@@ -10,7 +10,7 @@ import time
 import threading
 
 SONG_FILE = "songs.json"
-CURRENT_STATUS_PATH = "statics/currentStatus.json"
+CURRENT_STATUS_PATH = "static/currentStatus.json"
 TARGET_COUNT = 7
 
 

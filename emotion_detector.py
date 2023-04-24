@@ -5,7 +5,7 @@ from keras.models import model_from_json
 
 MODEL_PATH_JSON = 'models/emotion_model.json'
 MODEL_PATH_WEIGHTS = "models/emotion_model.h5"
-CURRENT_STATUS_PATH = "statics/currentStatus.json"
+CURRENT_STATUS_PATH = "static/currentStatus.json"
 TARGET_COUNT = 20
 
 

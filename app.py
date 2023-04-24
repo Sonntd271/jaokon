@@ -23,17 +23,17 @@ app = Flask(__name__)
 def get_page_direction():
     page_direct = {}
     try:
-        f = open("./statics/currentStatus.json")
+        f = open("./static/currentStatus.json")
         current_status = json.load(f)
     except FileNotFoundError:
-        with open("./statics/currentStatus.json", "w") as outfile:
+        with open("./static/currentStatus.json", "w") as outfile:
             json.dump(DEFAULT_STATUS, outfile)
-        f = open("./statics/currentStatus.json")
+        f = open("./static/currentStatus.json")
         current_status = json.load(f)
     except:
-        with open("./statics/currentStatus.json", "w") as outfile:
+        with open("./static/currentStatus.json", "w") as outfile:
             json.dump(ERROR_STATUS, outfile)
-        f = open("./statics/currentStatus.json")
+        f = open("./static/currentStatus.json")
         current_status = json.load(f) 
     finally:
         if current_status["status"] == 1:
@@ -57,13 +57,13 @@ def get_page_direction():
         else:
             page_direct["mode"] = "error"
             page_direct["page"] = ""
-        with open("./statics/pageDirect.json", "w") as outfile:
+        with open("./static/pageDirect.json", "w") as outfile:
             json.dump(page_direct, outfile)
-        f = open("./statics/pageDirect.json")
+        f = open("./static/pageDirect.json")
         result = json.load(f)
         return result
             
-
+# Index
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", pageDirect=get_page_direction())
@@ -74,12 +74,13 @@ def error():
 
 @app.route("/close", methods=["GET"])    
 def close():
-    with open("./statics/pageDirect.json", "w") as outfile:
+    with open("./static/pageDirect.json", "w") as outfile:
         json.dump(DEFAULT_DIRECT, outfile)
-    with open("./statics/currentStatus.json", "w") as outfile:
+    with open("./static/currentStatus.json", "w") as outfile:
         json.dump(DEFAULT_STATUS, outfile)
     return render_template("close.html")
 
+#Emotions
 @app.route("/interaction", methods=["GET"])
 def interaction():
     return render_template("interaction.html", pageDirect=get_page_direction())
@@ -108,6 +109,7 @@ def fearful():
 def neutral():
     return render_template("interaction/neutral.html", pageDirect=get_page_direction())
 
+#Musiccal notes
 @app.route("/music", methods=["GET"])
 def music():
     return render_template("music.html", pageDirect=get_page_direction())
@@ -115,3 +117,5 @@ def music():
 @app.route("/music/do", methods=["GET"])
 def do():
     return render_template("music/do.html", pageDirect=get_page_direction())
+
+#Images

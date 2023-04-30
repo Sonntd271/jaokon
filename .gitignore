@@ -51,3 +51,6 @@ coverage.xml
 /venv
 /data
 /training
+
+# file
+test.py

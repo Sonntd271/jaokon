@@ -10,6 +10,8 @@ import time
 import threading
 
 SONG_FILE = "songs.json"
+CURRENT_STATUS_PATH = "statics/currentStatus.json"
+TARGET_COUNT = 7
 
 
 class Sussy:
@@ -52,8 +54,9 @@ class Sussy:
         self.song, self.notes = [[], []]
         with open(SONG_FILE) as json_file:
             data = json.load(json_file)
-            self.song = random.choice(list(data["songs"].items()))[1]
-            self.notes = random.choice(list(data["notes"].items()))[1]
+            chosen = random.choice(list(data["songs"]))
+            self.song = data["songs"][chosen]
+            self.notes = data["notes"][chosen]
 
     def play_sound(self, note, octave):
 
@@ -72,6 +75,7 @@ class Sussy:
         note = note[0]
         thread = threading.Thread(target=self.play_sound, args=(note, octave))
         thread.start()
+        thread.join()
 
     def playback(self, song):
 
@@ -82,6 +86,25 @@ class Sussy:
             while pygame.mixer.music.get_busy():
                 pygame.time.Clock().tick(10)
         pygame.quit()
+
+        self.index = 0
+
+    def update_json(self, note):
+        
+        msg = {
+            "status": 2,
+            "face": "",
+            "note": note
+        }
+        msg_json = json.dumps(msg, indent=4)
+        
+        print(f"Sending {note}")
+        with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+            current_status.write(msg_json)
+        print(f"Sent successfully")
+
+        self.count = 0
+        print(f"Resetting count, count: {self.count}")
 
     def interact(self, cap, frame):
 
@@ -121,21 +144,22 @@ class Sussy:
         
         if self.prev_pred == self.pred and self.pred != "" and self.pred == self.song[self.index]:
             self.count += 1
-            if self.count >= 7:
-                self.color = (0,255,0)
-                self.count = 0
+            if self.count >= TARGET_COUNT:
+                self.color = (0, 255, 0)
+                self.update_json(note=self.notes[self.index])
                 self.insert = True
         else:
             self.count = 0
             self.prev_pred = None
-            self.color = (0,0,255)
-
+            self.color = (0, 0, 255)
+        
+        print("Prev:", self.prev_pred)
+        print("Pred:", self.pred)
+        
         if self.pred != "":
             self.prev_pred = self.pred
         
-        print("Want:", self.song[self.index])
-        print("Pred:", self.pred)
-        print("Prev:", self.prev_pred)
+        # print("Want:", self.song[self.index])
         print("Count:", self.count)
         print("Insert:", self.insert)
         print("Index:", self.index)
@@ -160,7 +184,7 @@ if __name__== "__main__":
     cap = cv2.VideoCapture(0)
     sus = Sussy()
 
-    while cap.isOpened():
+    while True:
         # insert = False
         ret, frame = cap.read()
 

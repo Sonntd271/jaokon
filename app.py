@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, url_for, request
 import json
 
 DEFAULT_STATUS = {
@@ -37,26 +37,23 @@ def get_page_direction():
         current_status = json.load(f) 
     finally:
         if current_status["status"] == 1:
-            page_direct["mode"] = "interaction"
             if len(current_status["face"]) > 0:
-                page_direct["page"] = "/"+current_status["face"]
+                page_direct["page"] = "face"
             else:
-                page_direct["page"] = ""
+                page_direct["page"] = "interaction"
         elif current_status["status"] == 2:
-            page_direct["mode"] = "music"
             if len(current_status["note"]) > 0:
-                page_direct["page"] = "/"+current_status["note"]
+                page_direct["page"] = "note"
             else:
-                page_direct["page"] = ""
+                page_direct["page"] = "music"
         elif current_status["status"] == 0:
-            page_direct["mode"] = ""
             page_direct["page"] = ""
         elif current_status["status"] == 3:
-            page_direct["mode"] = "close"
-            page_direct["page"] = ""
+            page_direct["page"] = "close"
         else:
-            page_direct["mode"] = "error"
-            page_direct["page"] = ""
+            page_direct["page"] = "error"
+        page_direct["face"] = current_status["face"]
+        page_direct["note"] = current_status["note"]
         with open("./static/pageDirect.json", "w") as outfile:
             json.dump(page_direct, outfile)
         f = open("./static/pageDirect.json")
@@ -80,42 +77,18 @@ def close():
         json.dump(DEFAULT_STATUS, outfile)
     return render_template("close.html")
 
-#Emotions
 @app.route("/interaction", methods=["GET"])
 def interaction():
     return render_template("interaction.html", pageDirect=get_page_direction())
 
-@app.route("/interaction/happy", methods=["GET"])    
-def happy():
-    return render_template("interaction/happy.html", pageDirect=get_page_direction())
+@app.route("/face", methods=["GET"])    
+def face():
+    return render_template("face.html", pageDirect=get_page_direction())
 
-@app.route("/interaction/sad", methods=["GET"])    
-def sad():
-    return render_template("interaction/sad.html", pageDirect=get_page_direction())
-
-@app.route("/interaction/angry", methods=["GET"])    
-def angey():
-    return render_template("interaction/angry.html", pageDirect=get_page_direction())
-
-@app.route("/interaction/disgusted", methods=["GET"])    
-def disgusted():
-    return render_template("interaction/disgusted.html", pageDirect=get_page_direction())
-
-@app.route("/interaction/fearful", methods=["GET"])    
-def fearful():
-    return render_template("interaction/fearful.html", pageDirect=get_page_direction())
-
-@app.route("/interaction/neutral", methods=["GET"])    
-def neutral():
-    return render_template("interaction/neutral.html", pageDirect=get_page_direction())
-
-#Musiccal notes
 @app.route("/music", methods=["GET"])
 def music():
     return render_template("music.html", pageDirect=get_page_direction())
 
-@app.route("/music/do", methods=["GET"])
-def do():
-    return render_template("music/do.html", pageDirect=get_page_direction())
-
-#Images
+@app.route("/note", methods=["GET"])
+def note():
+    return render_template("note.html", pageDirect=get_page_direction())

@@ -41,7 +41,7 @@ class emotionDetector:
         print(f"Sending {emotion}")
         with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
             current_status.write(msg_json)
-        print(f"Sent successfully")
+            print(f"Written successfully")
 
         self.count = 0
         print(f"Resetting count, count: {self.count}")

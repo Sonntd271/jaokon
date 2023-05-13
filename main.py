@@ -7,8 +7,13 @@ cap = cv2.VideoCapture(0)
 emotion_detector = emotionDetector()
 sus = Sussy()
 
+idle_ords = [ord("1"), ord("2"), ord("3"), ord("a")]
+interaction_ords = [ord("4"), ord("5"), ord("7"), ord("8"), ord("b")]
+music_ords = [ord("6"), ord("9"), ord("+"), ord("-"), ord("c")]
+
 status = 0
 p_time = 0
+off_count = 0
 
 while True:
 
@@ -36,14 +41,25 @@ while True:
     cv2.imshow("Image", frame)
 
     key = cv2.waitKey(1)
+    # print(f"Key: {key}, Off count: {off_count}")
 
-    if key == ord("a"):
+    if key in idle_ords:
         status = 0
-    elif key == ord("b"):
+        off_count += 1
+    elif key in interaction_ords:
         status = 1
-    elif key == ord("c"):
+        off_count = 0
+    elif key in music_ords:
         status = 2
+        off_count = 0
+        sus.choose_song()
     elif key == ord("q"):
+        break
+    else:
+        off_count = 0
+
+    if off_count >= 7:
+        print("Turning off")
         break
 
 cap.release()

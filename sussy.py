@@ -58,6 +58,8 @@ class Sussy:
             self.song = data["songs"][chosen]
             self.notes = data["notes"][chosen]
 
+        self.index = 0
+
     def play_sound(self, note, octave):
 
         pygame.init()
@@ -94,7 +96,7 @@ class Sussy:
         msg = {
             "status": 2,
             "face": "",
-            "note": note
+            "note": note[0]
         }
         msg_json = json.dumps(msg, indent=4)
         

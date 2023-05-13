@@ -1,7 +1,21 @@
 import cv2
 import time
+import json
 from emotion_detector import emotionDetector
 from sussy import Sussy
+
+CURRENT_STATUS_PATH = "statics/currentStatus.json"
+
+def update_json(status_no):
+    msg = {
+        "status": status_no,
+        "face": "",
+        "note": ""
+    }
+    msg_json = json.dumps(msg, indent=4)
+
+    with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+        current_status.write(msg_json)
 
 cap = cv2.VideoCapture(0)
 emotion_detector = emotionDetector()
@@ -32,7 +46,9 @@ while True:
         print("Ignoring empty camera frame.")
         break
 
-    if status == 1:
+    if status == 0:
+        update_json(status_no=status)
+    elif status == 1:
         frame = emotion_detector.detect(frame=frame)
     elif status == 2:
         frame = sus.interact(cap=cap, frame=frame)
@@ -59,6 +75,7 @@ while True:
         off_count = 0
 
     if off_count >= 7:
+        update_json(status_no=3)
         print("Turning off")
         break
 

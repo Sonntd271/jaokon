@@ -1,0 +1,218 @@
+[33mcommit fa3e8547c3005b745ce15ebd29190e3c212de4d2[m[33m ([m[1;36mHEAD -> [m[1;32mnot_main[m[33m, [m[1;31morigin/not_main[m[33m)[m
+Merge: 21f0de0 432ace4
+Author: unknown <lin13445@gmail.com>
+Date:   Sun May 14 20:39:37 2023 +0700
+
+    Merge branch 'main' of https://github.com/Sonntd271/jaokon into not_main
+
+[33mcommit 432ace47e851bc6c2d317e5096b2e5820de935fe[m[33m ([m[1;31morigin/soni[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sun May 14 00:08:13 2023 +0700
+
+    patch better 6.969
+
+[33mcommit 6643a6d06bfb71f782171da0d4818e5a6a291429[m
+Merge: 62c5dcf e420137
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat May 13 23:59:51 2023 +0700
+
+    Merge branch 'soni' of https://github.com/Sonntd271/jaokon into soni
+
+[33mcommit 62c5dcfdd058c6a04ee5d8d2fe2ed99c144709e7[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat May 13 23:59:00 2023 +0700
+
+    patch 6.969
+
+[33mcommit 21f0de0afa09d70d7aee03dd58dcca0fb44bc663[m
+Author: unknown <lin13445@gmail.com>
+Date:   Mon May 1 16:05:56 2023 +0700
+
+    audio available
+
+[33mcommit e420137ccbe8865b862a88765b2d0808a00169d4[m
+Merge: 7ffd134 2b6f84b
+Author: Sonntd271 <itssonntd271@gmail.com>
+Date:   Sun Apr 30 10:51:34 2023 +0700
+
+    Merge branch 'soni' of https://github.com/Sonntd271/jaokon into soni
+
+[33mcommit 7ffd134962cd7bbdb1368c5461e186de1abcb158[m
+Author: Sonntd271 <itssonntd271@gmail.com>
+Date:   Sun Apr 30 10:51:16 2023 +0700
+
+    update
+
+[33mcommit 476a1fa558892f4a956bcde0542d9ef74eedc8f3[m
+Author: unknown <lin13445@gmail.com>
+Date:   Mon Apr 24 17:04:46 2023 +0700
+
+    added images and others
+
+[33mcommit 289c3c575bee5bb1bc0022f5cf637dbd0e763ed7[m
+Author: unknown <lin13445@gmail.com>
+Date:   Mon Apr 24 14:19:15 2023 +0700
+
+    added emotions
+
+[33mcommit 2b6f84b55ca651982d4c9c1767b8f5553d91e186[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sun Apr 23 00:24:55 2023 +0700
+
+    minor fixes
+
+[33mcommit 0f5b09afb8ca4983e534c2c8b960a4b1e2022483[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sun Apr 23 00:03:35 2023 +0700
+
+    fixed threading crashes
+
+[33mcommit e40ca0be9a7709c04c5fc59ed6025d8bc6d0d35d[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Tue Apr 18 22:00:06 2023 +0700
+
+    gourmet meal
+
+[33mcommit 71c52ba283b01dc6aee324aa20844e7be5cfba60[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Tue Apr 18 01:21:48 2023 +0700
+
+    I COOKED
+
+[33mcommit 04974b6af248647eb73a92193fa9d8d6d32fe40d[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Tue Apr 18 01:06:33 2023 +0700
+
+    cooking
+
+[33mcommit 8493c0983c2f33c155af4a22462d346e5b423a09[m
+Author: Sonntd271 <itssonntd271@gmail.com>
+Date:   Tue Apr 18 00:27:49 2023 +0700
+
+    hol up let me cook
+
+[33mcommit 981ac85074846cee8f1690b4bfbff15a37f34119[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Mon Apr 17 00:34:56 2023 +0700
+
+    implemented oop to emotion_detector.py
+
+[33mcommit 9e042e94874c567acffb01424271208395b5cd26[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat Apr 15 00:26:33 2023 +0700
+
+    embed piano-mp3 to main
+
+[33mcommit 90055c53215b5947662a20fe57f57e3964a6e4d4[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat Apr 15 00:11:44 2023 +0700
+
+    clean 2
+
+[33mcommit a9647e63b2b882ae952822258f49f001d23a9650[m
+Merge: c143721 e30d43e
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat Apr 15 00:11:24 2023 +0700
+
+    Merge branch 'main' of https://github.com/Sonntd271/jaokon
+
+[33mcommit e30d43e3a1a619b9646dcd9dc1ab281af0f61ae6[m
+Author: Nattadon T <115402464+Sonntd271@users.noreply.github.com>
+Date:   Sat Apr 15 00:10:43 2023 +0700
+
+    Delete getdata/__pycache__ directory
+
+[33mcommit 0fe2f83f89c5f217ef553186a896bb7256e9ed50[m
+Author: Nattadon T <115402464+Sonntd271@users.noreply.github.com>
+Date:   Sat Apr 15 00:10:27 2023 +0700
+
+    deleted data directory
+
+[33mcommit c14372155f6060e944cc2ce7d1c307a94236961d[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat Apr 15 00:08:50 2023 +0700
+
+    clean 1
+
+[33mcommit c140db9e6b0c30ef5bd474c29253a6fecca616f6[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sat Apr 15 00:01:41 2023 +0700
+
+    merging current with kc
+
+[33mcommit 0d8bd53e38b3efd47d00e29c95f728eeb34d3113[m
+Merge: 7874ac2 4bbb1d3
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Fri Apr 14 23:56:29 2023 +0700
+
+    Merge branch 'kc' of https://github.com/Sonntd271/jaokon
+
+[33mcommit 7874ac23dd8ff71b46b681d5fa26b5525e9df6b2[m
+Merge: f990ff0 1a77d61
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Fri Apr 14 23:56:03 2023 +0700
+
+    merging soni with not_main
+
+[33mcommit 4bbb1d3f5ed0e802110efea259820a0ad4178c7f[m
+Author: Kridbhume Chammanard <kfccoolguy@gmail.comlist>
+Date:   Fri Apr 14 23:35:46 2023 +0700
+
+    second commit
+
+[33mcommit 7ebde4572e2dd7cea4936c4df0ec3ad8f0a295c1[m
+Author: Kridbhume Chammanard <kfccoolguy@gmail.comlist>
+Date:   Fri Apr 14 23:29:35 2023 +0700
+
+    first commit
+
+[33mcommit 1a77d6160cce85db8b7791ba144349002c68b7a4[m
+Author: unknown <lin13445@gmail.com>
+Date:   Fri Apr 14 23:21:13 2023 +0700
+
+    gg
+
+[33mcommit f990ff0721d6c61f53329e097149adf07ea2c65d[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Mon Apr 10 00:07:34 2023 +0700
+
+    minor changes to emotion_detectorl.py
+
+[33mcommit f5ca7eaa4ffe70a5dd59823bf01f0939421de27b[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Mon Apr 10 00:03:35 2023 +0700
+
+    trained second model with 200 epochs
+
+[33mcommit 9e76a5ad546fc305af0db6325645be93830d3576[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Sun Apr 9 19:14:04 2023 +0700
+
+    trained a prototype emotion detector model using CNN
+
+[33mcommit 53394ff6837168467358cc2836b084308d9334b0[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Thu Apr 6 22:26:06 2023 +0700
+
+    download fer dataset and updated .gitignore
+
+[33mcommit 4c7ee8a47fddd3013dd6e1a1a16f41ee6c1a81b9[m[33m ([m[1;32mmain[m[33m)[m
+Merge: efa48a8 5265ce7
+Author: Nattadon T <115402464+Sonntd271@users.noreply.github.com>
+Date:   Thu Apr 6 22:08:13 2023 +0700
+
+    Merge pull request #1 from Sonntd271/soni
+    
+    created a test file and added .gitignore
+
+[33mcommit 5265ce70edd675b3fe498a5d2ec330baa96f91ae[m
+Author: Nattadon <itssonntd271@gmail.com>
+Date:   Thu Apr 6 22:04:57 2023 +0700
+
+    created a test file and added .gitignore
+
+[33mcommit efa48a8b20b4d415b68d9b90c080c0502cb4682a[m
+Author: Nattadon T <115402464+Sonntd271@users.noreply.github.com>
+Date:   Thu Apr 6 21:36:43 2023 +0700
+
+    Initial commit

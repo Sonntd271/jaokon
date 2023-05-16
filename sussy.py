@@ -64,7 +64,7 @@ class Sussy:
 
         pygame.init()
         print(f"playing {note}{octave}")
-        pygame.mixer.music.load(f"notes/{note}{octave}.mp3")
+        pygame.mixer.music.load(f"static/audio/{note}{octave}.mp3")
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():
             # Check the tick
@@ -83,7 +83,7 @@ class Sussy:
 
         pygame.init()
         for i in song:
-            pygame.mixer.music.load(f"notes/{i}.mp3")
+            pygame.mixer.music.load(f"static/audio/{i}.mp3")
             pygame.mixer.music.play()
             while pygame.mixer.music.get_busy():
                 pygame.time.Clock().tick(10)

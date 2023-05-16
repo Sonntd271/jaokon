@@ -4,7 +4,7 @@ import json
 from emotion_detector import emotionDetector
 from sussy import Sussy
 
-CURRENT_STATUS_PATH = "statics/currentStatus.json"
+CURRENT_STATUS_PATH = "static/currentStatus.json"
 
 def update_json(status_no):
     msg = {

@@ -1,5 +1,6 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 
 {% block body %}
-  <h1>There is an error</h1>
+<img src="{{url_for('static', filename='pages/error.jpg')}}" align="middle" 
+style="width:100%;height:auto;object-fit:contain;"/>
 {% endblock %}

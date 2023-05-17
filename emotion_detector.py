@@ -12,7 +12,6 @@ TARGET_COUNT = 20
 class emotionDetector:
 
     def __init__(self):
-
         self.emotion_dict = {0: "angry", 1: "disgusted", 2: "fearful", 3: "happy", 4: "neutral", 5: "sad", 6: "surprised"}
         self.count = 0
         self.prev_pred = None
@@ -34,7 +33,10 @@ class emotionDetector:
         msg = {
             "status": 1,
             "face": emotion,
-            "note": ""
+            "note": "",
+            'note_index': 0,
+            'song': "",
+            'playback' : False
         }
         msg_json = json.dumps(msg, indent=4)
         

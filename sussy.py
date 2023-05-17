@@ -13,11 +13,13 @@ SONG_FILE = "songs.json"
 CURRENT_STATUS_PATH = "static/currentStatus.json"
 TARGET_COUNT = 7
 
+duration = 1000
+
+start_time = 0
 
 class Sussy:
 
     def __init__(self):
-        
         self.gestures = {0: "do", 1: "re", 2: "mi", 3: "fa", 4: "sol", 5: "la", 6: "ti"}
         self.count = 0
         self.index = 0
@@ -32,6 +34,7 @@ class Sussy:
                             tf.keras.metrics.FalseNegatives()])
         self.ht = HandTracking()
         self.choose_song()
+        self.init_json()
 
     def music_game(self, index, cap, song, frame, bool):
 
@@ -55,6 +58,7 @@ class Sussy:
         with open(SONG_FILE) as json_file:
             data = json.load(json_file)
             chosen = random.choice(list(data["songs"]))
+            self.song_name = chosen
             self.song = data["songs"][chosen]
             self.notes = data["notes"][chosen]
 
@@ -63,16 +67,20 @@ class Sussy:
     def play_sound(self, note, octave):
 
         pygame.init()
-        print(f"playing {note}{octave}")
-        pygame.mixer.music.load(f"static/audio/{note}{octave}.mp3")
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            # Check the tick
-            pygame.time.Clock().tick(10)
-        pygame.quit()
+        global start_time
+
+        sound = pygame.mixer.Sound(f"static/audio/{note}{octave}.mp3")
+        sound_channel = sound.play()
+
+        start_time = pygame.time.get_ticks()
+
+        while True:
+            elapsed_time = pygame.time.get_ticks() - start_time
+            if elapsed_time >= duration:
+                sound_channel.stop()
+                break
 
     def parallel(self, note):
-        
         octave = note[1]
         note = note[0]
         thread = threading.Thread(target=self.play_sound, args=(note, octave))
@@ -80,26 +88,43 @@ class Sussy:
         thread.join()
 
     def playback(self, song):
+        f = open("./static/currentStatus.json")
+        current_status = json.load(f)
+        msg = {
+        "status": current_status["status"],
+        "face": current_status["face"],
+        "note": current_status["note"],
+        "note_index": current_status["note_index"],
+        "song": current_status["song"],
+        "playback" : True
+        }
+        msg_json = json.dumps(msg, indent=4)
+        with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+            current_status.write(msg_json)
+        f.close()
 
         pygame.init()
-        for i in song:
-            pygame.mixer.music.load(f"static/audio/{i}.mp3")
-            pygame.mixer.music.play()
-            while pygame.mixer.music.get_busy():
-                pygame.time.Clock().tick(10)
+        pygame.mixer.music.load(f"static/songs/{song}.mp3")
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)
         pygame.quit()
 
         self.index = 0
 
     def update_json(self, note):
-        
+        f = open("./static/currentStatus.json")
+        current_status = json.load(f)
         msg = {
             "status": 2,
             "face": "",
-            "note": note[0]
-        }
+            "note": note,
+            "note_index": self.index,
+            "song": self.song_name,
+            "playback" : False
+            }
         msg_json = json.dumps(msg, indent=4)
-        
+
         print(f"Sending {note}")
         with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
             current_status.write(msg_json)
@@ -107,9 +132,25 @@ class Sussy:
 
         self.count = 0
         print(f"Resetting count, count: {self.count}")
+        f.close()
+
+    def init_json(self):
+        f = open("./static/currentStatus.json")
+        current_status = json.load(f)
+        msg = {
+            "status": 2,
+            "face": "",
+            "note":self.notes[self.index],
+            "note_index": self.index,
+            "song": self.song_name,
+            "playback" : False
+            }
+        msg_json = json.dumps(msg, indent=4)
+        with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
+            current_status.write(msg_json)
+
 
     def interact(self, cap, frame):
-
         self.insert = False
 
         img = frame.copy()
@@ -173,7 +214,8 @@ class Sussy:
             self.index += 1
 
         if end:
-            self.playback(self.notes)
+            self.playback(self.song_name)
+            self.init_json()
             #add stuff for resetting
         
         cv2.putText(bgr_frame, self.pred, (10, int(cap.get(4)) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.color, 2)

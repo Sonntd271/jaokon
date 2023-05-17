@@ -1,0 +1,14 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+<img src="{{url_for('static', filename='pages/maintenance.jpg')}}" align="middle" 
+style="width:100%;height:auto;object-fit:contain;"/>
+
+<audio controls autoplay hidden>
+    <source src="{{ url_for('static', filename='songs/'+pageDirect.current_audio+'.mp3') }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+songs
+
+{% endblock %}

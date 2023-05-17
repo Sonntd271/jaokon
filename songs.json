@@ -1,14 +1,25 @@
 {
     "songs": 
     {
-        "twinkle": ["do", "do", "sol", "sol", "la", "la", "sol"]
+        "twinkle": ["do", "do", "sol", "sol", "la", "la", "sol"],
+        "mary": ["mi","re","do","re","mi","mi","mi","re","re","re","mi","sol","sol"],
+        "macdonald": ["do","fa","fa","fa","do","re","re","do","la","la","sol","sol","fa"],
+        "ode": ["ti","ti","do","re","re","do","ti","la","sol","sol","la","ti","la","sol","sol"],
+        "die4you": ["mi","mi","mi","re","sol","fa","mi","re","do","re","mi","sol","mi"],
+        "hbd": ["sol","sol","la","sol","do","ti","sol","sol","la","sol","re","do"]
+
     }, 
-    
+
     "notes": {
-        "twinkle": ["C4", "C4", "G4", "G4", "A4", "A4", "G4"]
+        "twinkle": ["C4", "C4", "G4", "G4", "A4", "A4", "G4"],
+        "mary": ["E4","D4","C4","D4","E4","E4","E4","D4","D4","D4","E4","G4","G4"],
+        "macdonald": ["C4","F4","F4","F4","C4","D4","D4","C4","A4","A4","G4","G4","F4"],
+        "ode": ["B4","B4","C5","D5","D5","C5","B4","A4","G4","G4","A4","B4","A4","G4","G4"],
+        "die4you": ["E4","E4","E4","D4","G4","F4","E4","D4","C4","D4","E4","G4","E4"],
+        "hbd": ["G3","G3","A3","G3","C4","B3","G3","G3","A3","G3","D4","C4"]
+
     },
     "playbacks": {
-        
+
     }
 }
-

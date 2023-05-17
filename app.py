@@ -4,24 +4,55 @@ import json
 DEFAULT_STATUS = {
     'status': 0, 
     'face': "", 
-    'note': ""
+    'note': "",
+    'note_index': 0,
+    'song': "",
+    'playback' : False
 }
 
 DEFAULT_DIRECT = {
-    "mode": "",
-    "page": ""
+    'next_page': "", 
+    'next_image': "", 
+    'next_audio': "",
+    'note_index': -1,
+    'current_image': "",
+    'current_audio': "",
 }
 
 ERROR_STATUS = {
-    "status": -1,
-    "face": "", 
-    "note": ""
+    'status': -1,
+    'face': "", 
+    'note': "",
+    'note_index': 0,
+    'song': "",
+    'playback' : False
+}
+
+SONG_DURATION ={
+    "twinkle": 15,
+    "mary": 18,
+    "macdonald": 20,
+    "ode": 22,
+    "die4you": ["mi","mi","mi","re","sol","fa","mi","re","do","re","mi","sol","mi"],
+    "hbd": 24
 }
 
 app = Flask(__name__)
 
-def get_page_direction():
-    page_direct = {}
+def read_page_direction():
+    try:
+        f = open("./static/pageDirect.json")
+        page_direct = json.load(f)
+    except FileNotFoundError:
+        with open("./static/pageDirect.json", "w") as outfile:
+            json.dump(DEFAULT_DIRECT, outfile)
+        f = open("./static/pageDirect.json")
+        page_direct = json.load(f)
+    finally:
+        return page_direct
+
+def update_status_to_direct():
+    page_direct = read_page_direction()
     try:
         f = open("./static/currentStatus.json")
         current_status = json.load(f)
@@ -36,31 +67,54 @@ def get_page_direction():
         f = open("./static/currentStatus.json")
         current_status = json.load(f) 
     finally:
+        page_direct["current_image"] = page_direct["next_image"]
+        page_direct["current_audio"] = page_direct["next_audio"]
         if current_status["status"] == 1:
             if len(current_status["face"]) > 0:
-                page_direct["page"] = "face"
+                page_direct["next_page"] = "face"
+                page_direct["next_image"] = current_status["face"]
             else:
-                page_direct["page"] = "interaction"
+                page_direct["next_page"] = "interaction"
+                page_direct["next_image"] = ""
+            page_direct["next_audio"] = ""
         elif current_status["status"] == 2:
             if len(current_status["note"]) > 0:
-                page_direct["page"] = "note"
+                if current_status["playback"]:
+                    page_direct["next_page"] = "song"
+                    page_direct["next_image"] = "maintenance"
+                    page_direct["next_audio"] = current_status["song"]
+                elif page_direct["note_index"] != current_status["note_index"]:
+                    page_direct["next_page"] = "note_audio"
+                    page_direct["next_image"] = current_status["note"][0]
+                    page_direct["next_audio"] = current_status["note"]
+                elif page_direct["note_index"] == current_status["note_index"]:
+                    page_direct["next_page"] = "note"
+                    page_direct["next_image"] = current_status["note"][0]
+                    page_direct["next_audio"] = current_status["note"]
             else:
-                page_direct["page"] = "music"
+                page_direct["next_page"] = "music"
+                page_direct["next_image"] = ""
+                page_direct["next_audio"] = ""
         elif current_status["status"] == 0:
-            page_direct["page"] = ""
+            page_direct["next_page"] = ""
+            page_direct["next_image"] = ""
+            page_direct["next_audio"] = ""
         elif current_status["status"] == 3:
-            page_direct["page"] = "close"
+            page_direct["next_page"] = "close"
+            page_direct["next_image"] = ""
+            page_direct["next_audio"] = ""
         else:
-            page_direct["page"] = "error"
-        page_direct["face"] = current_status["face"]
-        page_direct["note"] = current_status["note"]
+            page_direct["next_page"] = "error"
+            page_direct["next_image"] = ""
+            page_direct["next_audio"] = ""
+        page_direct["note_index"] = current_status["note_index"]
         with open("./static/pageDirect.json", "w") as outfile:
             json.dump(page_direct, outfile)
-        f = open("./static/pageDirect.json")
-        result = json.load(f)
-        return result
+
+def get_page_direction():
+    update_status_to_direct()
+    return read_page_direction()
             
-# Index
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", pageDirect=get_page_direction())
@@ -68,6 +122,10 @@ def index():
 @app.route("/error", methods=["GET"])    
 def error():
     return render_template("error.html", pageDirect=get_page_direction())
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("error.html", pageDirect=get_page_direction()), 404
 
 @app.route("/close", methods=["GET"])    
 def close():
@@ -92,3 +150,14 @@ def music():
 @app.route("/note", methods=["GET"])
 def note():
     return render_template("note.html", pageDirect=get_page_direction())
+
+@app.route("/note_audio", methods=["GET"])
+def note_audio():
+    return render_template("note_audio.html", pageDirect=get_page_direction())
+
+@app.route("/song", methods=["GET"])
+def song():
+    f = open("./static/currentStatus.json")
+    current_status = json.load(f)
+    song_name = current_status["song"]
+    return render_template("song.html", pageDirect=get_page_direction(), songDuration = SONG_DURATION[song_name])

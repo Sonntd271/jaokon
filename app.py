@@ -5,6 +5,7 @@ DEFAULT_STATUS = {
     'status': 0, 
     'face': "", 
     'note': "",
+    'prev_note': "",
     'note_index': 0,
     'song': "",
     'playback' : False
@@ -23,6 +24,7 @@ ERROR_STATUS = {
     'status': -1,
     'face': "", 
     'note': "",
+    'prev_note': "",
     'note_index': 0,
     'song': "",
     'playback' : False
@@ -67,43 +69,53 @@ def update_status_to_direct():
         f = open("./static/currentStatus.json")
         current_status = json.load(f) 
     finally:
+        print("step 1")
         page_direct["current_image"] = page_direct["next_image"]
         page_direct["current_audio"] = page_direct["next_audio"]
         if current_status["status"] == 1:
             if len(current_status["face"]) > 0:
+                print("face")
                 page_direct["next_page"] = "face"
                 page_direct["next_image"] = current_status["face"]
             else:
+                print("interaction")
                 page_direct["next_page"] = "interaction"
                 page_direct["next_image"] = ""
             page_direct["next_audio"] = ""
         elif current_status["status"] == 2:
-            if len(current_status["note"]) > 0:
-                if current_status["playback"]:
+            if current_status["playback"]:
+                    print("song")
                     page_direct["next_page"] = "song"
-                    page_direct["next_image"] = "maintenance"
+                    page_direct["next_image"] = ""
                     page_direct["next_audio"] = current_status["song"]
-                elif page_direct["note_index"] != current_status["note_index"]:
+            elif len(current_status["note"]) > 0:
+                if page_direct["note_index"] != current_status["note_index"]:
+                    print("sound")
                     page_direct["next_page"] = "note_audio"
                     page_direct["next_image"] = current_status["note"][0]
-                    page_direct["next_audio"] = current_status["note"]
-                elif page_direct["note_index"] == current_status["note_index"]:
+                    page_direct["next_audio"] = current_status["prev_note"]
+                else:
+                    print("no sound")
                     page_direct["next_page"] = "note"
                     page_direct["next_image"] = current_status["note"][0]
-                    page_direct["next_audio"] = current_status["note"]
+                    page_direct["next_audio"] = current_status["prev_note"]
             else:
+                print("music page")
                 page_direct["next_page"] = "music"
                 page_direct["next_image"] = ""
                 page_direct["next_audio"] = ""
         elif current_status["status"] == 0:
+            print("no status")
             page_direct["next_page"] = ""
             page_direct["next_image"] = ""
             page_direct["next_audio"] = ""
         elif current_status["status"] == 3:
+            print("close")
             page_direct["next_page"] = "close"
             page_direct["next_image"] = ""
             page_direct["next_audio"] = ""
         else:
+            print("error")
             page_direct["next_page"] = "error"
             page_direct["next_image"] = ""
             page_direct["next_audio"] = ""

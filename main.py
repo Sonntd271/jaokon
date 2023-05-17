@@ -9,6 +9,7 @@ DEFAULT_STATUS = {
     'status': 0, 
     'face': "", 
     'note': "",
+    'prev_note': "",
     'note_index': 0,
     'song': "",
     'playback' : False
@@ -21,6 +22,7 @@ def update_json(status_no):
     "status": status_no,
     "face": current_status["face"],
     "note": current_status["note"],
+    "prev_note": current_status["prev_note"],
     "note_index": current_status["note_index"],
     "song": current_status["song"],
     "playback" : current_status["playback"]
@@ -37,9 +39,9 @@ cap = cv2.VideoCapture(0)
 emotion_detector = emotionDetector()
 sus = Sussy()
 
-idle_ords = [ord("1"), ord("2"), ord("3"), ord("a")]
-interaction_ords = [ord("4"), ord("5"), ord("7"), ord("8"), ord("b")]
-music_ords = [ord("6"), ord("9"), ord("+"), ord("-"), ord("c")]
+idle_ords = [ord("4"), ord("5"), ord("6")]
+interaction_ords = [ord("/"), ord("7"), ord("8")]
+music_ords = [ord("*"), ord("9"), ord("-")]
 
 status = 0
 p_time = 0
@@ -86,6 +88,7 @@ while True:
         status = 2
         off_count = 0
         sus.choose_song()
+        sus.update_json()
     elif key == ord("q"):
         break
     else:

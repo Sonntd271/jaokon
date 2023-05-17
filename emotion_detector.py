@@ -34,9 +34,10 @@ class emotionDetector:
             "status": 1,
             "face": emotion,
             "note": "",
-            'note_index': 0,
-            'song': "",
-            'playback' : False
+            "prev_note": "",
+            "note_index": 0,
+            "song": "",
+            "playback" : False
         }
         msg_json = json.dumps(msg, indent=4)
         

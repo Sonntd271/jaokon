@@ -1,8 +1,9 @@
 {
-    "status": 2,
+    "status": 0,
     "face": "",
-    "note": "G3",
+    "note": "",
+    "prev_note": "",
     "note_index": 0,
-    "song": "hbd",
+    "song": "",
     "playback": false
 }

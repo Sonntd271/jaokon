@@ -34,7 +34,6 @@ class Sussy:
                             tf.keras.metrics.FalseNegatives()])
         self.ht = HandTracking()
         self.choose_song()
-        self.init_json()
 
     def music_game(self, index, cap, song, frame, bool):
 
@@ -43,11 +42,9 @@ class Sussy:
         cv2.putText(frame, song[index], (int(cap.get(3)/2), int(cap.get(4)/2)), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (0,0,255), 2)
         if bool == True:
-            index += 1
             inc = True
-        if index == len(song):
+        if index == len(song)-1:
             end = True
-            index = 0
             print("END")
 
         return inc, end
@@ -94,6 +91,7 @@ class Sussy:
         "status": current_status["status"],
         "face": current_status["face"],
         "note": current_status["note"],
+        "prev_note": current_status["prev_note"],
         "note_index": current_status["note_index"],
         "song": current_status["song"],
         "playback" : True
@@ -112,20 +110,23 @@ class Sussy:
 
         self.index = 0
 
-    def update_json(self, note):
+    def update_json(self):
         f = open("./static/currentStatus.json")
         current_status = json.load(f)
         msg = {
             "status": 2,
             "face": "",
-            "note": note,
+            "note": self.notes[self.index],
+            "prev_note": self.notes[self.index-1],
             "note_index": self.index,
             "song": self.song_name,
             "playback" : False
             }
+        if self.index == 0:
+            msg["prev_note"] = self.notes[self.index]
         msg_json = json.dumps(msg, indent=4)
 
-        print(f"Sending {note}")
+        print(f"Sending {self.notes[self.index]}")
         with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
             current_status.write(msg_json)
         print(f"Sent successfully")
@@ -140,15 +141,17 @@ class Sussy:
         msg = {
             "status": 2,
             "face": "",
-            "note":self.notes[self.index],
+            "note": self.notes[self.index],
+            "prev_note": self.notes[self.index-1],
             "note_index": self.index,
             "song": self.song_name,
             "playback" : False
             }
+        if self.index == 0:
+            msg["prev_note"] = self.notes[self.index]
         msg_json = json.dumps(msg, indent=4)
         with open(file=CURRENT_STATUS_PATH, mode="w") as current_status:
             current_status.write(msg_json)
-
 
     def interact(self, cap, frame):
         self.insert = False
@@ -189,7 +192,6 @@ class Sussy:
             self.count += 1
             if self.count >= TARGET_COUNT:
                 self.color = (0, 255, 0)
-                self.update_json(note=self.notes[self.index])
                 self.insert = True
         else:
             self.count = 0
@@ -212,14 +214,14 @@ class Sussy:
         if inc:
             self.parallel(self.notes[self.index])
             self.index += 1
+            self.update_json()
 
         if end:
             self.playback(self.song_name)
-            self.init_json()
+            self.update_json()
             #add stuff for resetting
         
         cv2.putText(bgr_frame, self.pred, (10, int(cap.get(4)) - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.color, 2)
-
         return bgr_frame
 
 
